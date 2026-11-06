@@ -19,8 +19,11 @@
 .pet:focus-visible{outline-offset:-5px}
 .pet:hover .sticker,.pet.is-loved .sticker{background:var(--pink)}
 
-.grooming{margin:0}
-.grooming video{pointer-events:none;display:block;width:100%;aspect-ratio:16/9;border-radius:24px;background:#e5d8f5}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
+.grooming{margin:0;position:relative}
+.video-toggle{position:absolute;right:14px;bottom:14px;border:1px solid var(--ink);border-radius:30px;background:var(--cream);padding:6px 14px;font-size:13px;font-weight:700}
+.video-toggle:hover{background:var(--lilac)}.grooming video{pointer-events:none;display:block;width:100%;aspect-ratio:16/9;border-radius:24px;background:#e5d8f5}
 .grooming figcaption{margin-top:9px;font-size:13px}
 
 .about{margin-top:clamp(35px,6vw,75px);background:var(--lilac);align-items:center}
@@ -41,12 +44,12 @@
 <h1 id="hero-title">Patiler burada <em>şımarır.</em></h1>
 <p>Biraz köpük, biraz tarama, bolca özen. Patisemt’te her bakım, dostunuzun tüy yapısına ve alışkanlıklarına göre şekillenir.</p>
 <button class="pill" data-book>Randevu planla <span aria-hidden="true">↗</span></button></div>
-<button class="photo pet" id="pet" type="button" aria-label="Köpeği sev"><video id="pet-idle" src="pet-idle.mp4" poster="pet-poster.webp" muted playsinline loop preload="metadata" aria-hidden="true"></video><video id="pet-stroke" src="pet-stroke.mp4?v=2" muted playsinline preload="auto" aria-hidden="true"></video><span class="sticker" aria-hidden="true">♡<br>Beni sev!</span></button><span id="pet-feedback" role="status" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)"></span>
+<button class="photo pet" id="pet" type="button" aria-label="Köpeği sev"><video id="pet-idle" src="pet-idle.mp4" poster="pet-poster.webp" muted playsinline loop preload="metadata" aria-hidden="true"></video><video id="pet-stroke" src="pet-stroke.mp4?v=2" muted playsinline preload="auto" aria-hidden="true"></video><span class="sticker" aria-hidden="true">♡<br>Beni sev!</span></button><span id="pet-feedback" class="sr-only" role="status"></span>
 </section>
 <div class="strip">BANYO &amp; TARAMA <b aria-hidden="true">✦</b> TÜY KESİMİ <b aria-hidden="true">✦</b> PATİ BAKIMI</div>
 <section class="split about" aria-labelledby="about-title">
 <div><div class="eyebrow">✦ Patisemt hakkında</div><h2 id="about-title">Onlar bizim <em>ailemiz.</em></h2><p>Patisemt, kedinizin ya da köpeğinizin bakımına onu tanıyarak başlar. Tüy yapısı, alışkanlıkları ve hassasiyetleri, banyo ve kesimden önce konuştuğumuz ayrıntılar.</p><p>Dostunuzun ihtiyacına uygun bakımı birlikte seçelim.</p><a class="pill" href="#bakim">Bakım menüsüne göz at ↘</a></div>
-<figure class="grooming"><video id="about-video" muted playsinline loop preload="none" src="about-pets.mp4?v=2" poster="about-pets.webp?v=2" aria-label="Bakım sırasında beyaz bir köpek ve bakıcısı"></video></figure>
+<figure class="grooming"><video id="about-video" muted playsinline loop preload="none" src="about-pets.mp4?v=2" poster="about-pets.webp?v=2" aria-label="Bakım sırasında beyaz bir köpek ve bakıcısı"></video><button class="video-toggle" type="button" aria-controls="about-video" aria-pressed="false">Durdur</button></figure>
 </section>
 <section class="section" id="bakim">
 <div class="eyebrow">01 / Bakım menüsü</div>
@@ -59,7 +62,7 @@
 <section aria-labelledby="grooming-title" style="margin-bottom:clamp(40px,7vw,86px)">
 <div class="eyebrow">Bakım yakından</div>
 <div class="heading"><h2 id="grooming-title">Tüy kesimi <em>nasıl yapılır?</em></h2><p>Köpeğin yüz ve boyun çevresindeki tüylerin makasla şekillendirilmesini yakından izleyin.</p></div>
-<figure class="grooming"><video id="grooming-video" muted autoplay loop src="grooming.mp4" poster="grooming.webp" preload="auto" playsinline aria-label="Köpek tüy kesimi videosu"></video></figure>
+<figure class="grooming"><video id="grooming-video" muted loop src="grooming.mp4" poster="grooming.webp" preload="none" playsinline aria-label="Köpek tüy kesimi videosu"></video><button class="video-toggle" type="button" aria-controls="grooming-video" aria-pressed="false">Durdur</button></figure>
 </section>
 <section class="split section" id="studyo"><div><div class="eyebrow">02 / Patisemt’te bir ziyaret</div><h2>Her şey <em>tanışmakla</em> başlar.</h2><p>İlk kez geliyorsanız dostunuzun bakım alışkanlıklarını ve hassas olduğu noktaları önceden paylaşabilirsiniz.</p></div>
 <div class="steps"><div class="step"><span>01</span><strong>İhtiyacını anlatın</strong>Türünü, tüy yapısını ve tercih ettiğiniz bakımı belirtin.</div><div class="step"><span>02</span><strong>Bakımın kapsamını belirleyin</strong>Banyo, tarama ve kesim gibi adımları ihtiyacına göre seçin.</div><div class="step"><span>03</span><strong>Bir sonraki bakımı planlayın</strong>Tüy ve pati bakımını evde nasıl sürdürebileceğinizi konuşun.</div></div>
@@ -75,7 +78,7 @@
 <dialog id="booking" aria-labelledby="booking-title">
 <div class="modal-top"><h2 id="booking-title">Randevu planla</h2><button type="button" id="close" aria-label="Kapat">×</button></div>
 <p class="notice">Seçimleriniz WhatsApp mesajına eklenir. Göndermeden önce mesajı kontrol edebilirsiniz.</p>
-<form id="plan"><label>Dostunuz<select id="booking-pet" required><option value="">Seçin</option><option>Köpek</option><option>Kedi</option></select></label><label>Bakım<select id="booking-care" required><option value="">Seçin</option><option>Köpük &amp; Tarama</option><option>Kesim &amp; Şekillendirme</option><option>Pati Molası</option></select></label><label>Tercih ettiğiniz gün<input id="booking-day" type="date" required></label><a class="pill" id="whatsapp-link" href="https://wa.me/905550821515">WhatsApp’tan randevu iste ↗</a><p id="result" role="status"></p></form>
+<form id="plan"><label>Dostunuz<select id="booking-pet" required><option value="">Seçin</option><option>Köpek</option><option>Kedi</option></select></label><label>Bakım<select id="booking-care" required><option value="">Seçin</option><option>Köpük &amp; Tarama</option><option>Kesim &amp; Şekillendirme</option><option>Pati Molası</option></select></label><label>Tercih ettiğiniz gün<input id="booking-day" type="date" required></label><a class="pill" id="whatsapp-link" href="https://wa.me/905550821515" target="_blank" rel="noopener">WhatsApp’tan randevu iste ↗</a><p id="result" role="status"></p></form>
 </dialog>
 <script>
 const pet = document.querySelector('#pet');
@@ -84,6 +87,8 @@ const petFeedback = document.querySelector('#pet-feedback');
 const idleVideo = document.querySelector('#pet-idle');
 const strokeVideo = document.querySelector('#pet-stroke');
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const WHATSAPP_PHONE = '905550821515';
+const petStickerDefault = petSticker.innerHTML;
 
 function playIdle() {
   if (!reducedMotion.matches) idleVideo.play().catch(() => {});
@@ -96,7 +101,7 @@ function finishPetting() {
   pet.classList.remove('is-playing');
   if (strokeVideo.ended) strokeVideo.currentTime = 0;
   pet.classList.remove('is-loved');
-  petSticker.textContent = '♡ Beni sev!';
+  petSticker.innerHTML = petStickerDefault;
   playIdle();
 }
 
@@ -104,6 +109,11 @@ playIdle();
 reducedMotion.addEventListener('change', () => {
   if (reducedMotion.matches) idleVideo.pause();
   else if (!pet.classList.contains('is-playing')) playIdle();
+  autoVideos.forEach(video => {
+    if (!canAutoplay(video)) video.pause();
+    else if (video.dataset.visible === 'true') playVisibleVideo(video);
+    syncToggle(video);
+  });
 });
 pet.addEventListener('click', () => {
   if (petting) return;
@@ -121,10 +131,28 @@ strokeVideo.addEventListener('playing', () => {
 strokeVideo.addEventListener('ended', finishPetting);
 strokeVideo.addEventListener('error', finishPetting);
 
+const autoVideos = document.querySelectorAll('#grooming-video, #about-video');
+
+// video.dataset.choice: kullanıcı düğmeye basmadıysa boş, bastıysa 'play' ya da 'pause'.
+// Kullanıcı seçimi yoksa hareket azaltma tercihi belirleyicidir.
+function canAutoplay(video) {
+  if (video.dataset.choice === 'play') return true;
+  if (video.dataset.choice === 'pause') return false;
+  return !reducedMotion.matches;
+}
+
+function syncToggle(video) {
+  const toggle = video.parentElement.querySelector('.video-toggle');
+  if (!toggle) return;
+  const stopped = !canAutoplay(video);
+  toggle.textContent = stopped ? 'Oynat' : 'Durdur';
+  toggle.setAttribute('aria-pressed', String(stopped));
+}
+
 function playVisibleVideo(video) {
   video.dataset.visible = 'true';
   const startVideo = () => {
-    if (video.dataset.visible !== 'true') return;
+    if (video.dataset.visible !== 'true' || !canAutoplay(video)) return;
     if (video.ended) video.currentTime = 0;
     video.play().catch(() => {});
   };
@@ -151,8 +179,20 @@ const videoObserver = new IntersectionObserver(entries => {
     }
   });
 }, { threshold: [0, 0.05, 0.25] });
-document.querySelectorAll('#grooming-video, #about-video').forEach(video => {
+autoVideos.forEach(video => {
   videoObserver.observe(video);
+  syncToggle(video);
+  const toggle = video.parentElement.querySelector('.video-toggle');
+  toggle.addEventListener('click', () => {
+    if (canAutoplay(video)) {
+      video.dataset.choice = 'pause';
+      video.pause();
+    } else {
+      video.dataset.choice = 'play';
+      playVisibleVideo(video);
+    }
+    syncToggle(video);
+  });
 });
 
 const dialog = document.querySelector('#booking');
@@ -162,7 +202,6 @@ const bookingPet = document.querySelector('#booking-pet');
 const bookingCare = document.querySelector('#booking-care');
 const bookingDay = document.querySelector('#booking-day');
 const whatsappLink = document.querySelector('#whatsapp-link');
-const mobileWhatsapp = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 const today = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Europe/Istanbul' }).format(new Date());
 bookingDay.min = today;
 document.querySelectorAll('[data-book]').forEach(button => {
@@ -176,9 +215,7 @@ document.querySelectorAll('[data-book]').forEach(button => {
 document.querySelector('#close').addEventListener('click', () => dialog.close());
 function updateWhatsappLink() {
   if (!bookingPet.value || !bookingCare.value || !bookingDay.value) {
-    whatsappLink.href = mobileWhatsapp
-      ? 'whatsapp://send?phone=905550821515'
-      : 'https://wa.me/905550821515';
+    whatsappLink.href = 'https://wa.me/' + WHATSAPP_PHONE;
     return;
   }
   const date = new Date(bookingDay.value + 'T12:00:00Z');
@@ -193,10 +230,8 @@ function updateWhatsappLink() {
     '',
     'Bu tarihteki müsait saatlerinizi benimle paylaşabilir misiniz? Teşekkür ederim.'
   ].join('\n');
-  const encodedMessage = encodeURIComponent(message);
-  whatsappLink.href = mobileWhatsapp
-    ? 'whatsapp://send?phone=905550821515&text=' + encodedMessage
-    : 'https://wa.me/905550821515?text=' + encodedMessage;
+  // wa.me her cihazda çalışır: uygulama kuruluysa onu, değilse WhatsApp Web'i açar.
+  whatsappLink.href = 'https://wa.me/' + WHATSAPP_PHONE + '?text=' + encodeURIComponent(message);
 }
 form.addEventListener('input', () => {
   result.textContent = '';
