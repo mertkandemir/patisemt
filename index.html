@@ -56,6 +56,18 @@
 .contact-card strong{font:500 28px/1.15 Georgia,serif;letter-spacing:-.03em}
 .contact-card span:last-child{font-size:14px}
 footer small a{text-decoration:underline}
+
+.optional{font-weight:400;color:#69467b}
+.kunye{position:relative;margin:4px 0 2px;background:var(--lime);border:1px solid var(--ink);border-radius:18px;padding:16px 18px 14px;transform:rotate(-1.2deg);box-shadow:4px 5px 0 var(--ink)}
+.kunye-top{display:flex;justify-content:space-between;align-items:center}
+.kunye-brand{display:inline-flex;align-items:center;font-size:20px;font-weight:900;letter-spacing:-1.2px}
+.kunye-brand span{color:#8462ad}
+.kunye-hole{width:16px;height:16px;border-radius:50%;border:1px solid var(--ink);background:var(--cream)}
+.kunye-label{margin:8px 0 10px;font-size:10px;letter-spacing:.2em;font-weight:850;text-transform:uppercase;border-bottom:1px dashed #807858;padding-bottom:8px}
+.kunye dl{margin:0;display:grid;grid-template-columns:1fr 1fr;gap:8px 14px}
+.kunye dt{font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:750;color:#5d5640}
+.kunye dd{margin:0;font:500 18px/1.2 Georgia,serif;letter-spacing:-.02em;overflow-wrap:anywhere}
+.kunye dd.empty{color:#9a9478}
 </style>
 </head>
 <body>
@@ -108,8 +120,8 @@ footer small a{text-decoration:underline}
 <footer class="wrap"><a class="logo" href="#ust">pati<span>semt</span><svg class="logo-paw" viewBox="0 0 34 34" aria-hidden="true"><ellipse cx="8" cy="12" rx="3.4" ry="4.8" transform="rotate(-24 8 12)"/><ellipse cx="14.6" cy="7.8" rx="3.5" ry="4.9" transform="rotate(-7 14.6 7.8)"/><ellipse cx="21.5" cy="8" rx="3.5" ry="4.9" transform="rotate(8 21.5 8)"/><ellipse cx="27.2" cy="12.6" rx="3.4" ry="4.7" transform="rotate(24 27.2 12.6)"/><path d="M17.5 15.2c-4.7 0-9.4 4.4-9.4 9 0 3.4 2.5 5.8 5.7 5.8 1.4 0 2.6-.5 3.7-1.4 1.1.9 2.3 1.4 3.7 1.4 3.2 0 5.7-2.4 5.7-5.8 0-4.6-4.7-9-9.4-9Z"/></svg></a><small>Güzelbahçe, İzmir · Kedi &amp; köpek kuaförü · <a href="https://www.google.com/maps/dir/?api=1&amp;destination=38.357792,26.888058" target="_blank" rel="noopener">Yol tarifi</a> · <a href="https://wa.me/905550821515" target="_blank" rel="noopener">0555 082 15 15</a></small></footer>
 <dialog id="booking" aria-labelledby="booking-title">
 <div class="modal-top"><h2 id="booking-title">Randevu planla</h2><button type="button" id="close" aria-label="Kapat">×</button></div>
-<p class="notice">Seçimleriniz WhatsApp mesajına eklenir. Göndermeden önce mesajı kontrol edebilirsiniz.</p>
-<form id="plan"><label>Dostunuz<select id="booking-pet" required><option value="">Seçin</option><option>Köpek</option><option>Kedi</option></select></label><label>Bakım<select id="booking-care" required><option value="">Seçin</option><option>Köpük &amp; Tarama</option><option>Kesim &amp; Şekillendirme</option><option>Pati Molası</option></select></label><label>Tercih ettiğiniz gün<input id="booking-day" type="date" required></label><a class="pill" id="whatsapp-link" href="https://wa.me/905550821515" target="_blank" rel="noopener">WhatsApp’tan randevu iste ↗</a><p id="result" role="status"></p></form>
+<p class="notice">Seçimleriniz pati künyesine işlenir ve WhatsApp mesajı olarak hazırlanır. Göndermeden önce mesajı kontrol edebilirsiniz.</p>
+<form id="plan"><label>Dostunuz<select id="booking-pet" required><option value="">Seçin</option><option>Köpek</option><option>Kedi</option></select></label><label><span>Dostunuzun adı <span class="optional">(isteğe bağlı)</span></span><input id="booking-name" type="text" maxlength="20" autocomplete="off" placeholder="Örn. Fıstık"></label><label>Bakım<select id="booking-care" required><option value="">Seçin</option><option>Köpük &amp; Tarama</option><option>Kesim &amp; Şekillendirme</option><option>Pati Molası</option></select></label><label>Tercih ettiğiniz gün<input id="booking-day" type="date" required></label><figure class="kunye" aria-label="Pati künyesi önizlemesi"><div class="kunye-top"><span class="kunye-brand">pati<span>semt</span><svg class="logo-paw" viewBox="0 0 34 34" aria-hidden="true"><ellipse cx="8" cy="12" rx="3.4" ry="4.8" transform="rotate(-24 8 12)"/><ellipse cx="14.6" cy="7.8" rx="3.5" ry="4.9" transform="rotate(-7 14.6 7.8)"/><ellipse cx="21.5" cy="8" rx="3.5" ry="4.9" transform="rotate(8 21.5 8)"/><ellipse cx="27.2" cy="12.6" rx="3.4" ry="4.7" transform="rotate(24 27.2 12.6)"/><path d="M17.5 15.2c-4.7 0-9.4 4.4-9.4 9 0 3.4 2.5 5.8 5.7 5.8 1.4 0 2.6-.5 3.7-1.4 1.1.9 2.3 1.4 3.7 1.4 3.2 0 5.7-2.4 5.7-5.8 0-4.6-4.7-9-9.4-9Z"/></svg></span><span class="kunye-hole" aria-hidden="true"></span></div><div class="kunye-label">Pati künyesi</div><dl><div><dt>Dostum</dt><dd id="k-pet">—</dd></div><div><dt>Adı</dt><dd id="k-name">—</dd></div><div><dt>Bakım</dt><dd id="k-care">—</dd></div><div><dt>Tarih</dt><dd id="k-day">—</dd></div></dl></figure><a class="pill" id="whatsapp-link" href="https://wa.me/905550821515" target="_blank" rel="noopener">WhatsApp’tan randevu iste ↗</a><p id="result" role="status"></p></form>
 </dialog>
 <script>
 const pet = document.querySelector('#pet');
@@ -219,22 +231,57 @@ document.querySelectorAll('[data-book]').forEach(button => {
   });
 });
 document.querySelector('#close').addEventListener('click', () => dialog.close());
+const bookingName = document.querySelector('#booking-name');
+const kunyeFields = {
+  pet: document.querySelector('#k-pet'),
+  name: document.querySelector('#k-name'),
+  care: document.querySelector('#k-care'),
+  day: document.querySelector('#k-day')
+};
+
+// WhatsApp biçimlendirmesini bozmasın diye *, _, ~ ve ` karakterlerini temizle.
+function cleanName() {
+  return bookingName.value.replace(/[*_~`]/g, '').trim();
+}
+
+function formatDay() {
+  if (!bookingDay.value) return '';
+  const date = new Date(bookingDay.value + 'T12:00:00Z');
+  return new Intl.DateTimeFormat('tr-TR', {
+    day: 'numeric', month: 'long', year: 'numeric', weekday: 'long', timeZone: 'Europe/Istanbul'
+  }).format(date);
+}
+
+function setKunyeField(el, value) {
+  el.textContent = value || '—';
+  el.classList.toggle('empty', !value);
+}
+
+function updateKunye() {
+  setKunyeField(kunyeFields.pet, bookingPet.value);
+  setKunyeField(kunyeFields.name, cleanName());
+  setKunyeField(kunyeFields.care, bookingCare.value);
+  setKunyeField(kunyeFields.day, formatDay());
+}
+
 function updateWhatsappLink() {
+  updateKunye();
   if (!bookingPet.value || !bookingCare.value || !bookingDay.value) {
     whatsappLink.href = 'https://wa.me/' + WHATSAPP_PHONE;
     return;
   }
-  const date = new Date(bookingDay.value + 'T12:00:00Z');
-  const day = new Intl.DateTimeFormat('tr-TR', { dateStyle: 'long', timeZone: 'Europe/Istanbul' }).format(date);
+  const petEmoji = bookingPet.value === 'Kedi' ? '🐱' : '🐶';
+  const name = cleanName();
+  const line = '━━━━━━━━━━━━━━━';
   const message = [
-    'Merhaba Patisemt 👋',
-    'Dostum için randevu oluşturmak istiyorum.',
-    '',
-    '🐾 Dostum: ' + bookingPet.value,
-    '✂️ Bakım: ' + bookingCare.value,
-    '📅 Tercih ettiğim tarih: ' + day,
-    '',
-    'Bu tarihteki müsait saatlerinizi benimle paylaşabilir misiniz? Teşekkür ederim.'
+    '🐾 *PATİSEMT · PATİ KÜNYESİ*',
+    line,
+    petEmoji + ' *Dostum:* ' + bookingPet.value,
+    ...(name ? ['🏷️ *Adı:* ' + name] : []),
+    '✂️ *Bakım:* ' + bookingCare.value,
+    '📅 *Tarih:* ' + formatDay(),
+    line,
+    'Merhaba! Bu tarih için müsait saatlerinizi paylaşır mısınız? 🙏'
   ].join('\n');
   // wa.me her cihazda çalışır: uygulama kuruluysa onu, değilse WhatsApp Web'i açar.
   whatsappLink.href = 'https://wa.me/' + WHATSAPP_PHONE + '?text=' + encodeURIComponent(message);
