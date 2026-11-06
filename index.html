@@ -21,7 +21,10 @@
 
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 
-.grooming{margin:0}.grooming video{pointer-events:none;display:block;width:100%;aspect-ratio:16/9;border-radius:24px;background:#e5d8f5}
+.grooming{margin:0}
+.pet .anim-fallback{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.grooming .anim-fallback{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:24px}
+.about .grooming .anim-fallback{aspect-ratio:446/344;border-radius:20px}.grooming video{pointer-events:none;display:block;width:100%;aspect-ratio:16/9;border-radius:24px;background:#e5d8f5}
 .grooming figcaption{margin-top:9px;font-size:13px}
 
 .about{margin-top:clamp(35px,6vw,75px);background:var(--lilac);align-items:center}
@@ -87,8 +90,36 @@ const strokeVideo = document.querySelector('#pet-stroke');
 const WHATSAPP_PHONE = '905550821515';
 const petStickerDefault = petSticker.innerHTML;
 
+// iPhone Düşük Güç Modu gibi durumlarda tarayıcı otomatik video oynatmayı engeller.
+// O zaman videonun yerine aynı görüntünün hareketli WebP sürümünü gösteriyoruz.
+const ANIM_FALLBACKS = {
+  'pet-idle': 'pet-idle-anim.webp',
+  'about-video': 'about-pets-anim.webp',
+  'grooming-video': 'grooming-anim.webp'
+};
+
+function useAnimatedFallback(video) {
+  const animSrc = ANIM_FALLBACKS[video.id];
+  if (!animSrc || video.dataset.fallback === 'true') return;
+  video.dataset.fallback = 'true';
+  const img = new Image();
+  img.className = 'anim-fallback';
+  img.src = animSrc;
+  img.alt = video.getAttribute('aria-label') || '';
+  if (!img.alt) img.setAttribute('aria-hidden', 'true');
+  video.after(img);
+  video.style.display = 'none';
+}
+
+function tryPlay(video) {
+  if (video.dataset.fallback === 'true') return;
+  video.play().catch(error => {
+    if (error && error.name === 'NotAllowedError') useAnimatedFallback(video);
+  });
+}
+
 function playIdle() {
-  idleVideo.play().catch(() => {});
+  tryPlay(idleVideo);
 }
 
 let petting = false;
@@ -121,31 +152,18 @@ strokeVideo.addEventListener('error', finishPetting);
 
 const autoVideos = document.querySelectorAll('#grooming-video, #about-video');
 
+// play() videoyu kendisi yükler; tarayıcı engellerse hemen NotAllowedError verir.
 function playVisibleVideo(video) {
   video.dataset.visible = 'true';
-  const startVideo = () => {
-    if (video.dataset.visible !== 'true') return;
-    if (video.ended) video.currentTime = 0;
-    video.play().catch(() => {});
-  };
-  if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
-    startVideo();
-    return;
-  }
-  if (video.dataset.playPending === 'true') return;
-  video.dataset.playPending = 'true';
-  video.addEventListener('canplay', () => {
-    video.dataset.playPending = 'false';
-    startVideo();
-  }, { once: true });
-  video.load();
+  if (video.ended) video.currentTime = 0;
+  tryPlay(video);
 }
 
 const videoObserver = new IntersectionObserver(entries => {
   entries.forEach(({ target, isIntersecting, intersectionRatio }) => {
     if (isIntersecting && intersectionRatio >= 0.05) {
       playVisibleVideo(target);
-    } else {
+    } else if (target.dataset.fallback !== 'true') {
       target.dataset.visible = 'false';
       target.pause();
     }
