@@ -21,9 +21,7 @@
 
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 
-.grooming{margin:0;position:relative}
-.video-toggle{position:absolute;right:14px;bottom:14px;border:1px solid var(--ink);border-radius:30px;background:var(--cream);padding:6px 14px;font-size:13px;font-weight:700}
-.video-toggle:hover{background:var(--lilac)}.grooming video{pointer-events:none;display:block;width:100%;aspect-ratio:16/9;border-radius:24px;background:#e5d8f5}
+.grooming{margin:0}.grooming video{pointer-events:none;display:block;width:100%;aspect-ratio:16/9;border-radius:24px;background:#e5d8f5}
 .grooming figcaption{margin-top:9px;font-size:13px}
 
 .about{margin-top:clamp(35px,6vw,75px);background:var(--lilac);align-items:center}
@@ -49,7 +47,7 @@
 <div class="strip">BANYO &amp; TARAMA <b aria-hidden="true">✦</b> TÜY KESİMİ <b aria-hidden="true">✦</b> PATİ BAKIMI</div>
 <section class="split about" aria-labelledby="about-title">
 <div><div class="eyebrow">✦ Patisemt hakkında</div><h2 id="about-title">Onlar bizim <em>ailemiz.</em></h2><p>Patisemt, kedinizin ya da köpeğinizin bakımına onu tanıyarak başlar. Tüy yapısı, alışkanlıkları ve hassasiyetleri, banyo ve kesimden önce konuştuğumuz ayrıntılar.</p><p>Dostunuzun ihtiyacına uygun bakımı birlikte seçelim.</p><a class="pill" href="#bakim">Bakım menüsüne göz at ↘</a></div>
-<figure class="grooming"><video id="about-video" muted playsinline loop preload="none" src="about-pets.mp4?v=2" poster="about-pets.webp?v=2" aria-label="Bakım sırasında beyaz bir köpek ve bakıcısı"></video><button class="video-toggle" type="button" aria-controls="about-video" aria-pressed="false">Durdur</button></figure>
+<figure class="grooming"><video id="about-video" muted playsinline loop preload="none" src="about-pets.mp4?v=2" poster="about-pets.webp?v=2" aria-label="Bakım sırasında beyaz bir köpek ve bakıcısı"></video></figure>
 </section>
 <section class="section" id="bakim">
 <div class="eyebrow">01 / Bakım menüsü</div>
@@ -62,7 +60,7 @@
 <section aria-labelledby="grooming-title" style="margin-bottom:clamp(40px,7vw,86px)">
 <div class="eyebrow">Bakım yakından</div>
 <div class="heading"><h2 id="grooming-title">Tüy kesimi <em>nasıl yapılır?</em></h2><p>Köpeğin yüz ve boyun çevresindeki tüylerin makasla şekillendirilmesini yakından izleyin.</p></div>
-<figure class="grooming"><video id="grooming-video" muted loop src="grooming.mp4" poster="grooming.webp" preload="none" playsinline aria-label="Köpek tüy kesimi videosu"></video><button class="video-toggle" type="button" aria-controls="grooming-video" aria-pressed="false">Durdur</button></figure>
+<figure class="grooming"><video id="grooming-video" muted loop src="grooming.mp4" poster="grooming.webp" preload="none" playsinline aria-label="Köpek tüy kesimi videosu"></video></figure>
 </section>
 <section class="split section" id="studyo"><div><div class="eyebrow">02 / Patisemt’te bir ziyaret</div><h2>Her şey <em>tanışmakla</em> başlar.</h2><p>İlk kez geliyorsanız dostunuzun bakım alışkanlıklarını ve hassas olduğu noktaları önceden paylaşabilirsiniz.</p></div>
 <div class="steps"><div class="step"><span>01</span><strong>İhtiyacını anlatın</strong>Türünü, tüy yapısını ve tercih ettiğiniz bakımı belirtin.</div><div class="step"><span>02</span><strong>Bakımın kapsamını belirleyin</strong>Banyo, tarama ve kesim gibi adımları ihtiyacına göre seçin.</div><div class="step"><span>03</span><strong>Bir sonraki bakımı planlayın</strong>Tüy ve pati bakımını evde nasıl sürdürebileceğinizi konuşun.</div></div>
@@ -86,12 +84,11 @@ const petSticker = pet.querySelector('.sticker');
 const petFeedback = document.querySelector('#pet-feedback');
 const idleVideo = document.querySelector('#pet-idle');
 const strokeVideo = document.querySelector('#pet-stroke');
-const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const WHATSAPP_PHONE = '905550821515';
 const petStickerDefault = petSticker.innerHTML;
 
 function playIdle() {
-  if (!reducedMotion.matches) idleVideo.play().catch(() => {});
+  idleVideo.play().catch(() => {});
 }
 
 let petting = false;
@@ -106,15 +103,6 @@ function finishPetting() {
 }
 
 playIdle();
-reducedMotion.addEventListener('change', () => {
-  if (reducedMotion.matches) idleVideo.pause();
-  else if (!pet.classList.contains('is-playing')) playIdle();
-  autoVideos.forEach(video => {
-    if (!canAutoplay(video)) video.pause();
-    else if (video.dataset.visible === 'true') playVisibleVideo(video);
-    syncToggle(video);
-  });
-});
 pet.addEventListener('click', () => {
   if (petting) return;
   petting = true;
@@ -133,26 +121,10 @@ strokeVideo.addEventListener('error', finishPetting);
 
 const autoVideos = document.querySelectorAll('#grooming-video, #about-video');
 
-// video.dataset.choice: kullanıcı düğmeye basmadıysa boş, bastıysa 'play' ya da 'pause'.
-// Kullanıcı seçimi yoksa hareket azaltma tercihi belirleyicidir.
-function canAutoplay(video) {
-  if (video.dataset.choice === 'play') return true;
-  if (video.dataset.choice === 'pause') return false;
-  return !reducedMotion.matches;
-}
-
-function syncToggle(video) {
-  const toggle = video.parentElement.querySelector('.video-toggle');
-  if (!toggle) return;
-  const stopped = !canAutoplay(video);
-  toggle.textContent = stopped ? 'Oynat' : 'Durdur';
-  toggle.setAttribute('aria-pressed', String(stopped));
-}
-
 function playVisibleVideo(video) {
   video.dataset.visible = 'true';
   const startVideo = () => {
-    if (video.dataset.visible !== 'true' || !canAutoplay(video)) return;
+    if (video.dataset.visible !== 'true') return;
     if (video.ended) video.currentTime = 0;
     video.play().catch(() => {});
   };
@@ -179,21 +151,7 @@ const videoObserver = new IntersectionObserver(entries => {
     }
   });
 }, { threshold: [0, 0.05, 0.25] });
-autoVideos.forEach(video => {
-  videoObserver.observe(video);
-  syncToggle(video);
-  const toggle = video.parentElement.querySelector('.video-toggle');
-  toggle.addEventListener('click', () => {
-    if (canAutoplay(video)) {
-      video.dataset.choice = 'pause';
-      video.pause();
-    } else {
-      video.dataset.choice = 'play';
-      playVisibleVideo(video);
-    }
-    syncToggle(video);
-  });
-});
+autoVideos.forEach(video => videoObserver.observe(video));
 
 const dialog = document.querySelector('#booking');
 const form = document.querySelector('#plan');
